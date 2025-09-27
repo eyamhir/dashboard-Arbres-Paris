@@ -1,117 +1,121 @@
 # 🌳 Dashboard Arbres Paris
 
-Un tableau de bord interactif pour visualiser et analyser les données des arbres de Paris, développé avec Dash/Plotly et déployé avec Docker.
+Un tableau de bord interactif moderne pour visualiser et analyser les données des arbres de Paris, développé avec Python, Dash et Plotly.
+
+![Python](https://img.shields.io/badge/Python-3.11-blue.svg)
+![Dash](https://img.shields.io/badge/Dash-Latest-green.svg)
+![Docker](https://img.shields.io/badge/Docker-Enabled-blue.svg)
+![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 ## 📋 Table des matières
 
-- [Vue d'ensemble](#vue-densemble)
+- [Aperçu](#aperçu)
 - [Fonctionnalités](#fonctionnalités)
-- [Architecture](#architecture)
+- [Technologies utilisées](#technologies-utilisées)
 - [Installation](#installation)
 - [Utilisation](#utilisation)
-- [Visualisations](#visualisations)
-- [Technologies utilisées](#technologies-utilisées)
 - [Structure du projet](#structure-du-projet)
-- [Configuration](#configuration)
 - [Déploiement](#déploiement)
+- [Visualisations](#visualisations)
 - [Contribution](#contribution)
 
-## 🎯 Vue d'ensemble
+## 🎯 Aperçu
 
-Ce projet présente un dashboard interactif permettant d'explorer les données des arbres parisiens. Il offre des visualisations dynamiques, des filtres interactifs et des métriques clés pour analyser la biodiversité urbaine de Paris.
+Ce projet présente un dashboard interactif permettant d'explorer et d'analyser les données des arbres parisiens. Il offre des visualisations géospatiales, des analyses statistiques et des insights sur la biodiversité urbaine de Paris.
 
 ### Objectifs du projet
-- **Visualisation des données** : Présenter les informations sur les arbres de manière claire et interactive
-- **Analyse de la biodiversité** : Identifier les espèces, leur répartition et leur rareté
-- **Interface utilisateur intuitive** : Permettre une exploration facile des données
-- **Déploiement scalable** : Architecture containerisée pour un déploiement flexible
+- 📊 Visualiser la distribution géographique des arbres parisiens
+- 🌿 Analyser la diversité des espèces d'arbres
+- 📈 Présenter des statistiques détaillées par arrondissement
+- 🗺️ Offrir une interface interactive et intuitive
 
 ## ✨ Fonctionnalités
 
-### 📊 Métriques principales
-- **Total des arbres** : Nombre total d'arbres dans la base de données
-- **Espèces uniques** : Diversité des espèces présentes
-- **Taille moyenne** : Statistiques sur les dimensions des arbres
-- **Espèce la plus rare** : Identification des espèces les moins communes
+### 🗺️ Cartographie interactive
+- Visualisation géospatiale des arbres sur une carte de Paris
+- Filtrage par arrondissement, espèce et caractéristiques
+- Clustering intelligent pour les grandes densités d'arbres
 
-### 🔍 Filtres interactifs
-- **Filtrage par espèce** : Sélection multiple d'espèces d'arbres
-- **Filtrage par adresse** : Localisation géographique des arbres
-- **Mise à jour en temps réel** : Toutes les visualisations se mettent à jour automatiquement
+### 📊 Analyses statistiques
+- Distribution des espèces d'arbres par arrondissement
+- Analyse de la biodiversité urbaine
+- Métriques de santé et de développement des arbres
 
-### 📈 Visualisations avancées
-- **Graphique de dispersion** : Relation taille vs score de conservation
-- **Histogramme** : Distribution des tailles d'arbres
-- **Graphique circulaire** : Répartition de la rareté
-- **Graphiques en barres** : Top 10 des espèces et adresses
+### 🎨 Interface utilisateur
+- Design moderne et responsive
+- Navigation intuitive avec Bootstrap
+- Graphiques interactifs avec Plotly
 
-### 💾 Fonctionnalités supplémentaires
-- **Export de données** : Téléchargement des données filtrées au format CSV
-- **Interface responsive** : Adaptation à tous les types d'écrans
-- **Thème sombre** : Interface moderne avec Plotly Dark
+### 🔍 Fonctionnalités avancées
+- Recherche et filtrage en temps réel
+- Export des données et visualisations
+- Analyses prédictives avec scikit-learn
 
-## 🏗️ Architecture
+## 🛠️ Technologies utilisées
 
-### Architecture applicative
-\`\`\`
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│     Nginx       │    │   Dashboard     │    │   Data Layer    │
-│   (Reverse      │────│   (Dash/Flask)  │────│   (CSV Files)   │
-│    Proxy)       │    │                 │    │                 │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-         │                       │                       │
-         │                       │                       │
-    Port 80                 Port 8050              File System
-\`\`\`
+### Backend & Data Processing
+- **Python 3.11** - Langage principal
+- **Pandas** - Manipulation et analyse des données
+- **GeoPandas** - Traitement des données géospatiales
+- **SQLAlchemy** - ORM pour la base de données
+- **PostgreSQL** - Base de données principale
 
-### Composants principaux
-1. **Frontend** : Interface Dash avec Bootstrap pour le styling
-2. **Backend** : Serveur Flask intégré avec Gunicorn
-3. **Reverse Proxy** : Nginx pour la gestion du trafic
-4. **Containerisation** : Docker et Docker Compose
+### Frontend & Visualisation
+- **Dash** - Framework web interactif
+- **Plotly** - Graphiques interactifs
+- **Dash Bootstrap Components** - Interface utilisateur moderne
+- **Folium** - Cartes interactives
+- **Matplotlib** - Graphiques statiques
+
+### Infrastructure & Déploiement
+- **Docker** - Conteneurisation
+- **Docker Compose** - Orchestration des services
+- **Nginx** - Serveur web et proxy inverse
+- **Gunicorn** - Serveur WSGI Python
+
+### Outils de développement
+- **Shapely** - Manipulation de géométries
+- **PyProj** - Projections cartographiques
+- **Scikit-learn** - Machine learning et analyses prédictives
 
 ## 🚀 Installation
 
 ### Prérequis
-- Docker et Docker Compose installés
-- Git pour cloner le repository
-- Au minimum 2GB de RAM disponible
+- Docker et Docker Compose
+- Python 3.11+ (pour le développement local)
+- Git
 
-### Installation rapide
+### Installation avec Docker
 
-1. **Cloner le repository**
+
+1. **Configurer les variables d'environnement**
 \`\`\`bash
-git clone https://github.com/eyamhir/dashboard-Arbres-Paris.git
-cd dashboard-Arbres-Paris
-\`\`\`
+cp  .env
+# Éditer le fichier .env avec vos configurations
+\`\`
 
-2. **Créer le fichier d'environnement**
-\`\`\`bash
-cp .env.example .env
-# Éditer le fichier .env selon vos besoins
-\`\`\`
-
-3. **Créer le réseau Docker**
+2. **Créer le réseau Docker**
 \`\`\`bash
 docker network create paris-net
 \`\`\`
 
-4. **Lancer l'application**
+3. **Lancer l'application**
 \`\`\`bash
 docker-compose up -d
 \`\`\`
 
-5. **Accéder au dashboard**
-Ouvrir votre navigateur à l'adresse : `http://localhost`
+4. **Accéder au dashboard**
+- Application : http://localhost
+- Dashboard direct : http://localhost:8050
 
-### Installation pour le développement
+### Installation locale
 
 1. **Créer un environnement virtuel**
 \`\`\`bash
 python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# ou
-venv\Scripts\activate     # Windows
+\`\`\`
+\`\`\`bash
+venv\Scripts\activate 
 \`\`\`
 
 2. **Installer les dépendances**
@@ -119,251 +123,113 @@ venv\Scripts\activate     # Windows
 pip install -r requirements.txt
 \`\`\`
 
-3. **Lancer en mode développement**
+3. **Configurer les variables d'environnement**
 \`\`\`bash
-cd dashboard
-python app.py
+export DATA_FILE="data/arbres_paris.csv"
+export DATABASE_URL="postgresql://user:password@localhost/paris_trees"
+export DEBUG="True"
 \`\`\`
 
-## 🎮 Utilisation
-
-### Interface utilisateur
-
-1. **Page d'accueil** : Vue d'ensemble avec les métriques principales
-2. **Filtres** : Panel de gauche pour sélectionner espèces et adresses
-3. **Visualisations** : Graphiques interactifs mis à jour en temps réel
-4. **Export** : Bouton de téléchargement pour les données filtrées
-
-### Interactions disponibles
-- **Zoom** : Clic et glisser sur les graphiques
-- **Sélection** : Clic sur les légendes pour masquer/afficher des données
-- **Hover** : Informations détaillées au survol
-- **Filtrage** : Sélection multiple dans les dropdowns
-
-## 📊 Visualisations
-
-### 1. Graphique de dispersion (Taille vs Conservation)
-- **Axe X** : Taille brute des arbres (`size_raw`)
-- **Axe Y** : Score de conservation (`conservation_score`)
-- **Couleur** : Niveau de rareté normalisé (`rarity_norm`)
-- **Interaction** : Hover pour voir espèce et adresse
-
-### 2. Histogramme des tailles
-- **Distribution** : Répartition des tailles d'arbres
-- **Bins** : 20 intervalles automatiques
-- **Couleur** : Bleu cyan (#17BECF)
-
-### 3. Graphique circulaire de rareté
-- **Segments** : Niveaux de rareté normalisés
-- **Pourcentages** : Affichage des proportions
-- **Couleurs** : Palette Viridis
-
-### 4. Top 10 des espèces
-- **Données** : Espèces les plus représentées
-- **Tri** : Par nombre d'occurrences décroissant
-- **Format** : Graphique en barres horizontales
-
-### 5. Top 10 des adresses
-- **Données** : Adresses avec le plus d'arbres
-- **Tri** : Par nombre d'arbres décroissant
-- **Format** : Graphique en barres horizontales
-
-## 🛠️ Technologies utilisées
-
-### Backend
-- **Python 3.11** : Langage principal
-- **Dash** : Framework pour applications web analytiques
-- **Plotly** : Bibliothèque de visualisation interactive
-- **Pandas** : Manipulation et analyse de données
-- **Flask** : Serveur web intégré
-
-### Frontend
-- **Dash Bootstrap Components** : Composants UI responsives
-- **Plotly.js** : Graphiques interactifs côté client
-- **HTML/CSS** : Structure et styling
-
-### Infrastructure
-- **Docker** : Containerisation de l'application
-- **Nginx** : Reverse proxy et serveur web
-- **Gunicorn** : Serveur WSGI pour Python
-
-### Données et traitement
-- **GeoPandas** : Données géospatiales
-- **Scikit-learn** : Algorithmes de machine learning
-- **PostgreSQL** : Base de données (optionnel)
+4. **Lancer l'application**
+\`\`\`bash
+python dashboard/app.py
+\`\`\`
 
 ## 📁 Structure du projet
 
-\`\`\`
-dashboard-Arbres-Paris/
-├── 📁 dashboard/           # Code principal de l'application
-│   ├── app.py             # Application Dash principale
-│   └── ...                # Autres modules dashboard
-├── 📁 data/               # Fichiers de données
-│   ├── arbres_enriched.csv # Données principales des arbres
-│   └── ...                # Autres fichiers de données
-├── 📁 scripts/            # Scripts de traitement des données
-│   ├── data_processing.py # Traitement et enrichissement
-│   └── ...                # Autres scripts utilitaires
-├── 📁 secrets/            # Fichiers de configuration sensibles
-├── 📁 .idea/              # Configuration IDE
-├── 📄 requirements.txt    # Dépendances Python
-├── 📄 Dockerfile          # Configuration Docker
-├── 📄 docker-compose.yml  # Orchestration des services
-├── 📄 nginx.conf          # Configuration Nginx
-├── 📄 .gitignore          # Fichiers ignorés par Git
-└── 📄 .env.example        # Template de variables d'environnement
-\`\`\`
 
-## ⚙️ Configuration
+📁dashboard-Arbres-Paris/
 
-### Variables d'environnement
+├── 📁 dashboard/           
+│   ├── app.py                    
+├── 📁 data/               
+│   ├── ..         
+├── 📁 scripts/            
+│   ├── ..      
+├── 📁 secrets/          
+├── 📁 .idea/             
+├── 🐳 Dockerfile       
+├── 🐳 docker-compose.yml   
+├── 🌐 nginx.conf       
+├── 📋 requirements.txt   
+└── 📝 README.md          
 
-Créer un fichier `.env` avec les variables suivantes :
 
-\`\`\`env
-# Fichier de données principal
-DATA_FILE=/app/data/arbres_enriched.csv
+## 🎨 Visualisations
 
-# Configuration base de données (optionnel)
-DATABASE_URL=postgresql://user:password@localhost:5432/paris_trees
+Le dashboard propose plusieurs types de visualisations:
 
-# Mode debug
-DEBUG=False
+### 🗺️ Cartes géospatiales
+- Carte de densité des arbres par arrondissement
+- Visualisation des espèces par zones géographiques
+- Heatmap de la biodiversité urbaine
 
-# Configuration serveur
-WORKERS=2
-THREADS=2
-TIMEOUT=120
-\`\`\`
+### 📊 Graphiques statistiques
+- Histogrammes de distribution des espèces
+- Graphiques en secteurs par arrondissement
+- Analyses temporelles de plantation
 
-### Configuration Nginx
-
-Le fichier `nginx.conf` configure le reverse proxy :
-- Port d'écoute : 80
-- Proxy vers le dashboard : port 8050
-- Gestion des fichiers statiques
-- Headers de sécurité
-
-### Configuration Docker
-
-**Dockerfile** :
-- Image de base : Python 3.11 slim
-- Installation des dépendances système
-- Configuration utilisateur non-root
-- Exposition du port 8050
-
-**docker-compose.yml** :
-- Service dashboard avec build local
-- Service nginx avec image officielle
-- Réseau partagé `paris-net`
-- Volumes pour les données et configuration
+### 📈 Tableaux de bord
+- KPI de biodiversité urbaine
+- Métriques de santé des arbres
+- Comparaisons inter-arrondissements
 
 ## 🚀 Déploiement
 
-### Déploiement local avec Docker
+### Déploiement avec Docker
 
-\`\`\`bash
-# Construction et lancement
-docker-compose up --build -d
+Le projet est entièrement dockerisé pour un déploiement facile :
 
-# Vérification des logs
-docker-compose logs -f
-
-# Arrêt des services
-docker-compose down
 \`\`\`
-
-### Déploiement en production
-
-1. **Serveur cloud** (AWS, GCP, Azure)
-\`\`\`bash
-# Sur le serveur
-git clone https://github.com/eyamhir/dashboard-Arbres-Paris.git
-cd dashboard-Arbres-Paris
-docker network create paris-net
+docker-compose -f docker-compose.prod.yml up -d
 docker-compose up -d
 \`\`\`
 
-2. **Configuration du domaine**
-- Pointer le domaine vers l'IP du serveur
-- Configurer HTTPS avec Let's Encrypt
-- Ajuster nginx.conf pour SSL
+### Déploiement avec ngrok
 
-3. **Monitoring et logs**
-\`\`\`bash
-# Surveillance des conteneurs
-docker stats
+- Invoke-WebRequest -Uri "https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-windows-amd64.zip" -OutFile "ngrok_v3.zip"
+- Expand-Archive .\ngrok_v3.zip -DestinationPath .\ngrok_v3
+- $env:Path += ";$PWD\ngrok_v3"
+- ngrok authtoken <TON_AUTHTOKEN_ICI>
+- ngrok http 8050
+-Forwarding  https://random-name-12345.ngrok.io -> http://localhost:8050
 
-# Logs en temps réel
-docker-compose logs -f dashboard
-\`\`\`
 
-### Déploiement avec CI/CD
+### Variables d'environnement
 
-Exemple de workflow GitHub Actions :
+\`\`\`env\`\`\`
+# Configuration de l'application
+DATA_FILE=data/arbres_paris.csv
+DATABASE_URL=postgresql+psycopg2://eya:eyaeya@db:5432/paris_data
+DEBUG=True
 
-\`\`\`yaml
-name: Deploy Dashboard
-on:
-  push:
-    branches: [main]
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Deploy to server
-        run: |
-          ssh user@server 'cd dashboard-Arbres-Paris && git pull && docker-compose up -d --build'
-\`\`\`
+# Configuration serveur
+WORKERS=2
+TIMEOUT=120
+BIND=0.0.0.0:8050
+
 
 ## 🤝 Contribution
 
-### Comment contribuer
+Les contributions sont les bienvenues ! Voici comment contribuer :
 
-1. **Fork** le repository
-2. **Créer** une branche pour votre fonctionnalité
-\`\`\`bash
-git checkout -b feature/nouvelle-fonctionnalite
-\`\`\`
-3. **Commiter** vos changements
-\`\`\`bash
-git commit -m "Ajout de nouvelle fonctionnalité"
-\`\`\`
-4. **Pousser** vers la branche
-\`\`\`bash
-git push origin feature/nouvelle-fonctionnalite
-\`\`\`
-5. **Créer** une Pull Request
+1. **Fork** le projet
+2. **Créer** une branche pour votre fonctionnalité (`git checkout -b  `)
+3. **Commit** vos changements (`git commit -m 'exemple commit'`)
+4. **Push** vers la branche (`git push origin main`)
+5. **Ouvrir** une Pull Request
 
 ### Standards de code
-
-- **PEP 8** : Respect des conventions Python
-- **Docstrings** : Documentation des fonctions
-- **Tests** : Ajout de tests pour les nouvelles fonctionnalités
-- **Commits** : Messages clairs et descriptifs
-
-### Roadmap
-
-- [ ] Ajout de cartes interactives avec Folium
-- [ ] API REST pour accès aux données
-- [ ] Authentification utilisateur
-- [ ] Tableau de bord administrateur
-- [ ] Export en différents formats (PDF, Excel)
-- [ ] Intégration de données météorologiques
-- [ ] Prédictions avec machine learning
-
-## 📞 Support
-
-- **Issues** : [GitHub Issues](https://github.com/eyamhir/dashboard-Arbres-Paris/issues)
-- **Discussions** : [GitHub Discussions](https://github.com/eyamhir/dashboard-Arbres-Paris/discussions)
-- **Email** : eyamhir@example.com
+- Suivre PEP 8 pour Python
+- Documenter les nouvelles fonctionnalités
+- Ajouter des tests pour les nouvelles fonctionnalités
+- Maintenir la compatibilité avec Python 3.11+
 
 ## 📄 Licence
 
-Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
+Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
----
+## 👨‍💻 Auteur
 
-**Développé avec ❤️ pour la ville de Paris et ses arbres** 🌳
+**Eyamhir** - [GitHub](https://github.com/eyamhir)
+
