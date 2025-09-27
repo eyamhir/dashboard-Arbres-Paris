@@ -1,0 +1,36 @@
+services:
+  dashboard:
+    build: .
+    container_name: paris-dashboard
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - DATA_FILE=${DATA_FILE}
+      - DATABASE_URL=${DATABASE_URL}
+      - DEBUG=${DEBUG}
+    ports:
+      - "8050:8050"       
+    volumes:
+      - ./data:/app/data:ro
+      - ./dashboard:/app/dashboard:ro
+      - ./scripts:/app/scripts:ro
+    networks:
+      - paris-net
+
+  nginx:
+    image: nginx:stable-alpine
+    container_name: paris-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - paris-net
+    depends_on:
+      - dashboard
+
+networks:
+  paris-net:
+    external: true
