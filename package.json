@@ -1,0 +1,20 @@
+{
+  "name": "paris-opendata",
+  "version": "1.0.0",
+  "description": "Un tableau de bord interactif moderne pour visualiser et analyser les données des arbres de Paris, développé avec Python, Dash et Plotly.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://eyamhir@github.com/eyamhir/dashboard-Arbres-Paris.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eyamhir/dashboard-Arbres-Paris/issues"
+  },
+  "homepage": "https://github.com/eyamhir/dashboard-Arbres-Paris#readme"
+}
