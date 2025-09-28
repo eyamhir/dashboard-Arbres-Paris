@@ -127,9 +127,9 @@ def update_dashboard(selected_species, selected_address, n_intervals):
     if selected_address:
         dff = dff[dff["com_adresse"].isin(selected_address)]
 
-    # Vérifier DataFrame vide
+    # Si DataFrame vide, reload complet pour éviter erreur
     if dff.empty:
-        dff = pd.read_csv(DATA_FILE)  # reload si vide
+        dff = pd.read_csv(DATA_FILE)
         dff["com_adresse"] = dff["com_adresse"].fillna("Inconnu")
         dff["arbres_espece"] = dff["arbres_espece"].fillna("Inconnu")
 
@@ -152,7 +152,7 @@ def update_dashboard(selected_species, selected_address, n_intervals):
     hist_fig = px.histogram(dff, x="size_raw", nbins=20, title="Distribution des tailles d'arbres", color_discrete_sequence=["#17BECF"])
     hist_fig.update_layout(template="plotly_dark")
 
-    # Pie chart
+    # Pie chart rareté
     if "rarity_norm" in dff.columns and dff["rarity_norm"].notna().any():
         rarity_fig = px.pie(dff, names="rarity_norm", title="Répartition de la rareté", color_discrete_sequence=px.colors.sequential.Viridis)
         rarity_fig.update_traces(textposition='inside', textinfo='percent+label')
@@ -160,7 +160,7 @@ def update_dashboard(selected_species, selected_address, n_intervals):
         rarity_fig = px.pie(names=["Aucune donnée"], values=[1], title="Répartition de la rareté")
     rarity_fig.update_layout(template="plotly_dark")
 
-    # Top espèces
+    # Top 10 espèces
     top_species = dff.groupby("arbres_espece").size().sort_values(ascending=False).head(10).reset_index()
     top_species.columns = ["Espèce", "Nombre"]
     top_species_fig = px.bar(top_species, x="Espèce", y="Nombre", text="Nombre", color="Nombre",
@@ -168,7 +168,14 @@ def update_dashboard(selected_species, selected_address, n_intervals):
     top_species_fig.update_traces(textposition='outside')
     top_species_fig.update_layout(template="plotly_dark")
 
-    
+    # Top 10 adresses
+    top_address = dff.groupby("com_adresse").size().sort_values(ascending=False).head(10).reset_index()
+    top_address.columns = ["Adresse", "Nombre"]
+    top_address_fig = px.bar(top_address, x="Adresse", y="Nombre", text="Nombre", color="Nombre",
+                             title="Top 10 adresses", color_continuous_scale=px.colors.sequential.Viridis)
+    top_address_fig.update_traces(textposition='outside')
+    top_address_fig.update_layout(template="plotly_dark")
+
     # KPIs
     total_trees = len(dff)
     unique_species = dff["arbres_espece"].nunique()
@@ -179,24 +186,6 @@ def update_dashboard(selected_species, selected_address, n_intervals):
         rare_species = "Inconnu"
 
     return scatter_fig, hist_fig, rarity_fig, top_species_fig, top_address_fig, total_trees, unique_species, avg_size, rare_species
-
-# ---------- 6. Callback pour téléchargement CSV ----------
-@app.callback(
-    Output("download-dataframe-csv", "data"),
-    Input("download-btn", "n_clicks"),
-    Input("species-dropdown", "value"),
-    Input("address-dropdown", "value"),
-    prevent_initial_call=True
-)
-def download_filtered_csv(n_clicks, selected_species, selected_address):
-    dff = pd.read_csv(DATA_FILE)
-    dff["com_adresse"] = dff["com_adresse"].fillna("Inconnu")
-    dff["arbres_espece"] = dff["arbres_espece"].fillna("Inconnu")
-    if selected_species:
-        dff = dff[dff["arbres_espece"].isin(selected_species)]
-    if selected_address:
-        dff = dff[dff["com_adresse"].isin(selected_address)]
-    return dcc.send_data_frame(dff.to_csv, "arbres_filtre.csv", index=False)
 
 # ---------- 7. Lancer l'app ----------
 if __name__ == "__main__":

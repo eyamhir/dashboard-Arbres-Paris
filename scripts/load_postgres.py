@@ -1,5 +1,6 @@
 import json
 import psycopg2
+from datetime import datetime
 
 # connexion PostgreSQL
 conn = psycopg2.connect(
@@ -17,11 +18,22 @@ with open("data/arbres.json", "r", encoding="utf-8") as f:
 
 for rec in records:
     f = rec["fields"]
-    genre = f.get("genre", "")
-    espece = f.get("espece", "")
-    adresse = f.get("adresse", "")
-    arrondissement = f.get("arrondissement", "")
-    date_plantation = f.get("dateplantation", "")
+    genre = f.get("genre") or None
+    espece = f.get("espece") or None
+    adresse = f.get("adresse") or None
+    arrondissement = f.get("arrondissement") or None
+
+    # gérer la date
+    date_str = f.get("dateplantation")
+    if date_str:
+        try:
+            date_plantation = datetime.strptime(date_str, "%Y-%m-%d").date()
+        except ValueError:
+            date_plantation = None
+    else:
+        date_plantation = None
+
+    # gérer les coordonnées
     coords = f.get("geo_point_2d", [None, None])
     lat, lon = coords if coords else (None, None)
 

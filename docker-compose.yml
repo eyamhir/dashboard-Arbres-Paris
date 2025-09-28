@@ -1,4 +1,21 @@
+version: "3.9"
+
 services:
+  postgres:
+    image: postgres:15
+    container_name: paris-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-parisdb}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - paris-net
+
   dashboard:
     build: .
     container_name: paris-dashboard
@@ -17,6 +34,8 @@ services:
       - ./scripts:/app/scripts:ro
     networks:
       - paris-net
+    depends_on:
+      - postgres
 
   nginx:
     image: nginx:stable-alpine
@@ -26,11 +45,13 @@ services:
       - "80:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
-
     networks:
       - paris-net
     depends_on:
       - dashboard
+
+volumes:
+  postgres_data:
 
 networks:
   paris-net:
