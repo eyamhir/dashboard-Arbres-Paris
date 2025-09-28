@@ -2,18 +2,14 @@
 import os
 import pandas as pd
 import dash
-from dash import dcc, html, Input, Output
+from dash import dcc, html, Input, Output, State
 import plotly.express as px
 import dash_bootstrap_components as dbc
 
-# ---------- 1. Charger le CSV (via variable d'environnement) ----------
+# ---------- 1. Charger le CSV ----------
 DATA_FILE = os.getenv("DATA_FILE", "/app/data/arbres_enriched.csv")
-
 if not os.path.exists(DATA_FILE):
     raise FileNotFoundError(f"Le fichier {DATA_FILE} est introuvable !")
-
-# Note : on ne garde plus df en mémoire pour le réel temps
-# df = pd.read_csv(DATA_FILE)
 
 # ---------- 2. Préparer les options dropdown ----------
 def get_species_options():
@@ -51,7 +47,7 @@ app.layout = dbc.Container([
                     dcc.Dropdown(id="species-dropdown", options=get_species_options(), multi=True, placeholder="Toutes les espèces"),
                     html.Br(),
                     html.Label("Filtrer par adresse"),
-                    dcc.Dropdown(id="address-dropdown", options=get_address_options(), multi=True, placeholder="Toutes les adresses"),
+                    dcc.Dropdown(id="address-dropdown", options=get_address_options(), multi=True, placeholder="Toutes les adresses")
                 ])
             ], className="mb-4 shadow"),
             width=4
@@ -71,17 +67,11 @@ app.layout = dbc.Container([
 
     dbc.Row([
         dbc.Col(
-            dbc.Card([
-                dbc.CardHeader("Top 10 Espèces"),
-                dbc.CardBody(dcc.Graph(id="top-species-bar"))
-            ], className="mb-4 shadow"),
+            dbc.Card([dbc.CardHeader("Top 10 Espèces"), dbc.CardBody(dcc.Graph(id="top-species-bar"))], className="mb-4 shadow"),
             width=6
         ),
         dbc.Col(
-            dbc.Card([
-                dbc.CardHeader("Top 10 Adresses"),
-                dbc.CardBody(dcc.Graph(id="top-address-bar"))
-            ], className="mb-4 shadow"),
+            dbc.Card([dbc.CardHeader("Top 10 Adresses"), dbc.CardBody(dcc.Graph(id="top-address-bar"))], className="mb-4 shadow"),
             width=6
         )
     ]),
@@ -113,10 +103,9 @@ app.layout = dbc.Container([
     Output("rare-species", "children"),
     Input("species-dropdown", "value"),
     Input("address-dropdown", "value"),
-    Input("interval-component", "n_intervals")  # <-- real-time trigger
+    Input("interval-component", "n_intervals")
 )
 def update_dashboard(selected_species, selected_address, n_intervals):
-    # Lire CSV à chaque update pour réel temps
     dff = pd.read_csv(DATA_FILE)
     dff["com_adresse"] = dff["com_adresse"].fillna("Inconnu")
     dff["arbres_espece"] = dff["arbres_espece"].fillna("Inconnu")
@@ -126,12 +115,6 @@ def update_dashboard(selected_species, selected_address, n_intervals):
         dff = dff[dff["arbres_espece"].isin(selected_species)]
     if selected_address:
         dff = dff[dff["com_adresse"].isin(selected_address)]
-
-    # Si DataFrame vide, reload complet pour éviter erreur
-    if dff.empty:
-        dff = pd.read_csv(DATA_FILE)
-        dff["com_adresse"] = dff["com_adresse"].fillna("Inconnu")
-        dff["arbres_espece"] = dff["arbres_espece"].fillna("Inconnu")
 
     # Colonnes numériques
     for col in ["size_raw", "conservation_score", "rarity_norm"]:
@@ -186,6 +169,26 @@ def update_dashboard(selected_species, selected_address, n_intervals):
         rare_species = "Inconnu"
 
     return scatter_fig, hist_fig, rarity_fig, top_species_fig, top_address_fig, total_trees, unique_species, avg_size, rare_species
+
+# ---------- 6. Callback pour téléchargement CSV ----------
+@app.callback(
+    Output("download-dataframe-csv", "data"),
+    Input("download-btn", "n_clicks"),
+    State("species-dropdown", "value"),
+    State("address-dropdown", "value"),
+    prevent_initial_call=True
+)
+def download_filtered_csv(n_clicks, selected_species, selected_address):
+    dff = pd.read_csv(DATA_FILE)
+    dff["com_adresse"] = dff["com_adresse"].fillna("Inconnu")
+    dff["arbres_espece"] = dff["arbres_espece"].fillna("Inconnu")
+
+    if selected_species:
+        dff = dff[dff["arbres_espece"].isin(selected_species)]
+    if selected_address:
+        dff = dff[dff["com_adresse"].isin(selected_address)]
+
+    return dcc.send_data_frame(dff.to_csv, "arbres_filtrés.csv", index=False)
 
 # ---------- 7. Lancer l'app ----------
 if __name__ == "__main__":
