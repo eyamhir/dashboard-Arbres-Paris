@@ -15,4 +15,4 @@ python /app/scripts/inspect_json.py
 echo "🔹 Step 5: Analyse arbres"
 python /app/scripts/analyse_arbres.py
 
-echo "✅ All scripts executed successfully!"
+echo " All scripts executed successfully!"

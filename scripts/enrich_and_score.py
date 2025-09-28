@@ -11,10 +11,10 @@ from sklearn.neighbors import NearestNeighbors
 from sqlalchemy import create_engine
 
 # ---------- paramètres ----------
-ARBRE_JSON = "data/arbres.json"
-OUT_CSV = "data/arbres_enriched.csv"
-OUT_GEOJSON = "data/arbres_enriched.geojson"
-DB_ENGINE_URL = "postgresql+psycopg2://eya:eyaeya@localhost:5432/paris_data"
+ARBRE_JSON = "/app/data/arbres.json"
+OUT_CSV = "/app/data/arbres_enriched.csv"
+OUT_GEOJSON = "/app/data/arbres_enriched.geojson"
+DB_ENGINE_URL = "postgresql+psycopg2://eya:eyaeya@postgres:5432/paris_data"
 EPSG_PROJECT = "EPSG:3857"  # projection métrique pour distances
 
 # ---------- 1. charger arbres ----------

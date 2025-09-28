@@ -27,10 +27,12 @@ services:
       - DATA_FILE=${DATA_FILE}
       - DATABASE_URL=${DATABASE_URL}
       - DEBUG=${DEBUG}
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_DB=${POSTGRES_DB:-parisdb}
     ports:
       - "8050:8050"       
     volumes:
-      - ./data:/app/data:ro
+      - ./data:/app/data
       - ./dashboard:/app/dashboard:ro
       - ./scripts:/app/scripts:ro
     networks:

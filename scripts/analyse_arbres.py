@@ -8,8 +8,8 @@ import numpy as np
 from sklearn.cluster import DBSCAN
 
 # ---------- 1. Charger les données enrichies ----------
-CSV_FILE = "data/arbres_enriched.csv"
-GEOJSON_FILE = "data/arbres_enriched.geojson"
+CSV_FILE = "/app/data/arbres_enriched.csv"
+GEOJSON_FILE = "/app/data/arbres_enriched.geojson"
 
 df = pd.read_csv(CSV_FILE)
 gdf = gpd.read_file(GEOJSON_FILE)
@@ -48,8 +48,8 @@ print("\nAdresses avec le plus d'arbres :")
 print(arr_stats.head(10))
 
 # ---------- 6. Export CSV ----------
-species_stats.to_csv("data/stats_by_species.csv", index=False)
-arr_stats.to_csv("data/stats_by_address.csv", index=False)
+species_stats.to_csv("/app/data/stats_by_species.csv", index=False)
+arr_stats.to_csv("/app/data/stats_by_address.csv", index=False)
 print("\nExport terminé : stats_by_species.csv et stats_by_address.csv")
 
 # ---------- 7. Graphiques ----------
@@ -58,7 +58,7 @@ plt.hist(df["size_raw"], bins=20, color="green", alpha=0.7)
 plt.title("Distribution des tailles d'arbres")
 plt.xlabel("Taille (m)")
 plt.ylabel("Nombre d'arbres")
-plt.savefig("data/hist_taille_arbres.png")
+plt.savefig("/app/data/hist_taille_arbres.png")
 plt.close()
 
 plt.figure(figsize=(8,5))
@@ -67,7 +67,7 @@ plt.colorbar(label="Distance au voisin le plus proche (m)")
 plt.title("Taille vs Conservation Score (coloré par isolement)")
 plt.xlabel("Taille (m)")
 plt.ylabel("Conservation Score")
-plt.savefig("data/scatter_size_score.png")
+plt.savefig("/app/data/scatter_size_score.png")
 plt.close()
 print("Graphiques exportés : hist_taille_arbres.png, scatter_size_score.png")
 
@@ -122,5 +122,5 @@ for _, row in gdf.iterrows():
     ).add_to(addr_layers[row['com_adresse']])
 
 LayerControl(collapsed=False).add_to(m)
-m.save("data/carte_arbres.html")
+m.save("/app/data/carte_arbres.html")
 print("Carte interactive exportée : carte_arbres.html")

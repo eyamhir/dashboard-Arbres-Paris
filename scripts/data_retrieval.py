@@ -5,7 +5,7 @@ import os
 # Paramètres
 DATASET = "arbresremarquablesparis"
 BASE_URL = "https://opendata.paris.fr/api/records/1.0/search/"
-ROWS = 100  # maximum autorisé par requête
+ROWS = 100  
 
 def fetch_data():
     all_records = []
@@ -30,7 +30,7 @@ def fetch_data():
 
     # sauvegarder en JSON
     os.makedirs("data", exist_ok=True)
-    with open("data/arbres.json", "w", encoding="utf-8") as f:
+    with open("/app/data/arbres.json", "w", encoding="utf-8") as f:
         json.dump(all_records, f, ensure_ascii=False, indent=2)
 
     print(f"{len(all_records)} enregistrements sauvegardés dans data/arbres.json")

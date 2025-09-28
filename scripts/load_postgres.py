@@ -4,7 +4,7 @@ from datetime import datetime
 
 # connexion PostgreSQL
 conn = psycopg2.connect(
-    host="localhost",
+    host="postgres",
     port=5432,
     dbname="paris_data",
     user="eya",
@@ -13,7 +13,7 @@ conn = psycopg2.connect(
 cursor = conn.cursor()
 
 # charger le JSON
-with open("data/arbres.json", "r", encoding="utf-8") as f:
+with open("/app/data/arbres.json", "r", encoding="utf-8") as f:
     records = json.load(f)
 
 for rec in records:
