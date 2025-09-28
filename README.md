@@ -57,7 +57,6 @@ Ce projet présente un dashboard interactif permettant d'explorer et d'analyser 
 - **Python 3.11** - Langage principal
 - **Pandas** - Manipulation et analyse des données
 - **GeoPandas** - Traitement des données géospatiales
-- **SQLAlchemy** - ORM pour la base de données
 - **PostgreSQL** - Base de données principale
 
 ### Frontend & Visualisation
@@ -72,11 +71,6 @@ Ce projet présente un dashboard interactif permettant d'explorer et d'analyser 
 - **Docker Compose** - Orchestration des services
 - **Nginx** - Serveur web et proxy inverse
 - **Gunicorn** - Serveur WSGI Python
-
-### Outils de développement
-- **Shapely** - Manipulation de géométries
-- **PyProj** - Projections cartographiques
-- **Scikit-learn** - Machine learning et analyses prédictives
 
 ## 🚀 Installation
 
@@ -94,17 +88,12 @@ cp  .env
 # Éditer le fichier .env avec vos configurations
 \`\`
 
-2. **Créer le réseau Docker**
-\`\`\`bash
-docker network create paris-net
-\`\`\`
-
-3. **Lancer l'application**
+2. **Lancer l'application**
 \`\`\`bash
 docker-compose up -d
 \`\`\`
 
-4. **Accéder au dashboard**
+3. **Accéder au dashboard**
 - Application : http://localhost
 - Dashboard direct : http://localhost:8050
 
@@ -126,7 +115,7 @@ pip install -r requirements.txt
 3. **Configurer les variables d'environnement**
 \`\`\`bash
 export DATA_FILE="data/arbres_paris.csv"
-export DATABASE_URL="postgresql://user:password@localhost/paris_trees"
+export DATABASE_URL="postgresql://eya:eyaeya@localhost/paris_trees"
 export DEBUG="True"
 \`\`\`
 
@@ -181,8 +170,7 @@ Le dashboard propose plusieurs types de visualisations:
 Le projet est entièrement dockerisé pour un déploiement facile :
 
 \`\`\`
-docker-compose -f docker-compose.prod.yml up -d
-docker-compose up -d
+docker-compose up --build -d
 \`\`\`
 
 ### Déploiement avec ngrok
