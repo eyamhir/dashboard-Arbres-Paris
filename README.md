@@ -197,17 +197,17 @@ docker-compose up -d
 
 ### Variables d'environnement
 
-\`\`\`env\`\`\`
-# Configuration de l'application
-DATA_FILE=data/arbres_paris.csv
+#### Configuration de l'application
+### .env
+ 
+POSTGRES_USER=eya  
+POSTGRES_PASSWORD=eyaeya  
+POSTGRES_DB=paris_data    
 DATABASE_URL=postgresql+psycopg2://eya:eyaeya@db:5432/paris_data
-DEBUG=True
 
-# Configuration serveur
-WORKERS=2
-TIMEOUT=120
-BIND=0.0.0.0:8050
-
+FLASK_ENV=production   
+DATA_FILE=/app/data/arbres_enriched.csv   
+DEBUG=Tru
 
 ## 🤝 Contribution
 
